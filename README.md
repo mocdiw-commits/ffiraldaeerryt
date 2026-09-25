@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideHub Pro - YouTube Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#0f0f0f] text-slate-100 font-sans pb-24 md:pb-12">
+    <header class="sticky top-0 z-50 bg-[#0f0f0f]/95 backdrop-blur-md px-4 md:px-6 py-3 flex items-center justify-between border-b border-[#272727]">
+        <div class="flex items-center space-x-4">
+            <button class="text-slate-300 hover:text-white p-2 rounded-full hover:bg-[#272727] transition">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-2">
+                <div class="bg-red-600 text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+                    <i class="fa-solid fa-play text-sm"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tighter text-white">Vide<span class="text-red-600">Hub</span></span>
+            </div>
+        </div>
+        <div class="flex-1 max-w-2xl mx-4 hidden md:flex items-center">
+            <div class="flex items-center w-full bg-[#121212] border border-[#303030] rounded-l-full px-4 py-2">
+                <i class="fa-solid fa-search text-slate-400 mr-3 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Telusuri video..." 
+                       class="bg-transparent border-none outline-none text-sm w-full text-white placeholder-slate-500">
+            </div>
+            <button class="bg-[#222222] hover:bg-[#272727] border border-l-0 border-[#303030] px-6 py-2 rounded-r-full text-slate-300 transition">
+                <i class="fa-solid fa-search"></i>
+            </button>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="bg-[#222222] hover:bg-[#272727] p-2.5 rounded-full text-slate-300 transition md:hidden">
+                <i class="fa-solid fa-search text-sm"></i>
+            </button>
+            <button class="bg-[#222222] hover:bg-[#272727] p-2.5 rounded-full text-slate-300 transition">
+                <i class="fa-solid fa-bell text-sm"></i>
+            </button>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-xs shadow">U</div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-6 py-6">
+        <div class="flex items-center space-x-3 overflow-x-auto no-scrollbar pb-4 mb-6">
+            <button class="bg-white text-black px-4 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">Semua</button>
+            <button class="bg-[#272727] hover:bg-[#3f3f3f] text-white px-4 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition">Gaming</button>
+            <button class="bg-[#272727] hover:bg-[#3f3f3f] text-white px-4 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition">Sinematik</button>
+            <button class="bg-[#272727] hover:bg-[#3f3f3f] text-white px-4 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition">Animasi</button>
+            <button class="bg-[#272727] hover:bg-[#3f3f3f] text-white px-4 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition">Musik</button>
+        </div>
+
+        <div id="videoContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f0f0f] border-t border-[#272727] py-2 px-6 flex justify-between items-center z-50">
+        <a href="#" class="flex flex-col items-center text-white"><i class="fa-solid fa-house text-lg"></i><span class="text-[10px] mt-1">Beranda</span></a>
+        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-compass text-lg"></i><span class="text-[10px] mt-1">Jelajahi</span></a>
+        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-circle-plus text-2xl text-red-600"></i><span class="text-[10px] mt-1">Buat</span></a>
+        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-film text-lg"></i><span class="text-[10px] mt-1">Shorts</span></a>
+        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-user text-lg"></i><span class="text-[10px] mt-1">Anda</span></a>
+    </nav>
+
+    <script>
+        // Daftar Video — ganti URL dengan link yang valid
+        const videoList = [
+            { id: 1, title: "Koleksi Video Sinematik #1", keyword: "sinematik", url: "https://cdn2.videy.co/ZCYjhLqY1.mp4" },
+            { id: 2, title: "Koleksi Video Sinematik #2", keyword: "sinematik", url: "https://cdn2.videy.co/rPLTcN5n1.mp4" },
+            { id: 3, title: "Koleksi Video Sinematik #3", keyword: "sinematik", url: "https://cdn2.videy.co/6S6XyHIT1.mp4" },
+            { id: 4, title: "Koleksi Video Sinematik #4", keyword: "sinematik", url: "https://cdn2.videy.co/pZrZlFcS1.mp4" },
+            { id: 5, title: "Koleksi Video Sinematik #5", keyword: "sinematik", url: "https://cdn2.videy.co/VAf8h8KW1.mp4" }
+        ];
+
+        const videoContainer = document.getElementById('videoContainer');
+        
+        function renderVideos(items) {
+            videoContainer.innerHTML = '';
+            if (items.length === 0) {
+                videoContainer.innerHTML = `<p class="col-span-full text-center text-slate-400 py-10">Video tidak ditemukan</p>`;
+                return;
+            }
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-2xl border border-[#272727]";
+                card.innerHTML = `
+                    <div class="relative w-full aspect-video bg-black">
+                        <video class="w-full h-full object-contain" controls controlsList="nodownload" preload="metadata" playsinline>
+                            <source src="${item.url}" type="video/mp4">
+                            Browser Anda tidak mendukung pemutar video.
+                        </video>
+                    </div>
+                    <div class="p-3.5 bg-[#181818]">
+                        <h3 class="text-sm font-medium text-white mb-3">${item.title}</h3>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <button onclick="toggleLike(this)" class="flex items-center space-x-1.5 bg-[#272727] hover:bg-[#3f3f3f] px-3 py-1.5 rounded-full text-xs text-slate-200 transition">
+                                <i class="fa-regular fa-thumbs-up text-red-500"></i><span class="like-text">Suka</span>
+                            </button>
+                            <button onclick="shareVideo('${item.url}')" class="flex items-center space-x-1.5 bg-[#272727] hover:bg-[#3f3f3f] px-3 py-1.5 rounded-full text-xs text-slate-200 transition">
+                                <i class="fa-solid fa-share"></i><span>Bagikan</span>
+                            </button>
+                            <a href="${item.url}" target="_blank" download class="flex items-center space-x-1.5 bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-full text-xs text-white transition font-medium">
+                                <i class="fa-solid fa-download"></i><span>Unduh</span>
+                            </a>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-[#272727]">
+                            <span class="text-[11px] text-slate-400">Bagikan ke:</span>
+                            <div class="flex items-center space-x-2.5">
+                                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Tonton video ini: ' + item.url)}" target="_blank" class="w-7 h-7 rounded-full bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-whatsapp"></i></a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(item.url)}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://t.me/share/url?url=${encodeURIComponent(item.url)}" target="_blank" class="w-7 h-7 rounded-full bg-sky-500/20 hover:bg-sky-500 text-sky-400 hover:text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-telegram"></i></a>
+                                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(item.url)}" target="_blank" class="w-7 h-7 rounded-full bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white flex items-center justify-center text-xs transition"><i class="fa-brands fa-x-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                videoContainer.appendChild(card);
+            });
+        }
+
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            const text = btn.querySelector('.like-text');
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                text.innerText = 'Disukai';
+            } else {
+                icon.classList.replace('fa-solid', 'fa-regular');
+                text.innerText = 'Suka';
+            }
+        }
+
+        function shareVideo(url) {
+            navigator.clipboard.writeText(url).then(() => alert('Tautan disalin!'));
+        }
+
+        document.getElementById('searchInput').addEventListener('input', e => {
+            const kw = e.target.value.toLowerCase();
+            renderVideos(kw === '' ? videoList : videoList.filter(v => v.keyword.includes(kw) || v.title.toLowerCase().includes(kw)));
+        });
+
+        renderVideos(videoList);
+    </script>
+</body>
+</html>
